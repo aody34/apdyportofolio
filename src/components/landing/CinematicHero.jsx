@@ -116,17 +116,31 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
 
             {/* Content */}
             <div className="hero-content">
-                <div className="hero-text-container">
-                    <p className="hero-intro">This is not a portfolio...</p>
-                    <h1 className="hero-title">
-                        <span className="hero-title-line">It's an</span>
-                        <span className="hero-title-highlight">Experience</span>
-                    </h1>
-                    <div className="hero-divider" />
-                    <p className="hero-subtitle">
-                        Crafted by <span className="hero-name">Abdi Kadir Abdullahi</span>
-                    </p>
-                    <p className="hero-role">Frontend Developer & Creative Technologist</p>
+                <div className="hero-grid">
+                    <div className="hero-text-container">
+                        <p className="hero-intro">This is not a portfolio...</p>
+                        <h1 className="hero-title">
+                            <span className="hero-title-line">It's an</span>
+                            <span className="hero-title-highlight">Experience</span>
+                        </h1>
+                        <div className="hero-divider" />
+                        <p className="hero-subtitle">
+                            Crafted by <span className="hero-name">Abdi Kadir Abdullahi</span>
+                        </p>
+                        <p className="hero-role">Frontend Developer & Creative Technologist</p>
+                    </div>
+
+                    <div className="hero-image-container">
+                        <div className="hero-image-wrapper">
+                            <div className="hero-image-glow" />
+                            <img
+                                src="/profile.jpg"
+                                alt="Abdi Kadir Abdullahi"
+                                className="hero-profile-img"
+                            />
+                            <div className="hero-image-border" />
+                        </div>
+                    </div>
                 </div>
 
                 {/* Scroll Indicator */}
