@@ -1,0 +1,215 @@
+/* ========================================
+   CINEMATIC HERO SECTION STYLES
+   ======================================== */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+/* 3D Canvas Container */
+.hero-canvas-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.hero-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Gradient Overlay for text readability */
+.hero-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+            transparent 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(5, 5, 8, 0.8) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Content Layer */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-xl);
+    text-align: center;
+}
+
+.hero-text-container {
+    max-width: 900px;
+    animation: fadeInUp 1.2s var(--ease-out-expo) 0.5s both;
+}
+
+/* Intro Line */
+.hero-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-lg);
+    opacity: 0;
+    animation: fadeIn 1s var(--ease-out-expo) 0.8s forwards;
+}
+
+/* Main Title */
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.hero-title-line {
+    font-size: var(--text-4xl);
+    font-weight: 400;
+    color: var(--text-primary);
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out-expo) 1s forwards;
+}
+
+.hero-title-highlight {
+    font-size: var(--text-hero);
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: var(--glow-text);
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out-expo) 1.2s forwards,
+        glow 3s ease-in-out 2s infinite;
+}
+
+/* Divider Line */
+.hero-divider {
+    width: 100px;
+    height: 2px;
+    background: var(--gradient-primary);
+    margin: var(--space-xl) auto;
+    opacity: 0;
+    animation: scaleIn 0.8s var(--ease-out-expo) 1.5s forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+/* Subtitle & Role */
+.hero-subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    opacity: 0;
+    animation: fadeIn 1s var(--ease-out-expo) 1.7s forwards;
+}
+
+.hero-name {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.hero-role {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeIn 1s var(--ease-out-expo) 1.9s forwards;
+}
+
+/* Scroll Indicator */
+.hero-scroll-indicator {
+    position: absolute;
+    bottom: var(--space-2xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    opacity: 0;
+    animation: fadeIn 1s var(--ease-out-expo) 2.5s forwards;
+}
+
+.scroll-text {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+    position: relative;
+}
+
+.scroll-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollBounce 2s ease-in-out infinite;
+    box-shadow: var(--glow-cyan);
+}
+
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+
+    50% {
+        top: 50px;
+        opacity: 0.3;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-intro {
+        font-size: var(--text-base);
+        letter-spacing: 0.1em;
+    }
+
+    .hero-title-line {
+        font-size: var(--text-2xl);
+    }
+
+    .hero-title-highlight {
+        font-size: var(--text-4xl);
+    }
+
+    .hero-scroll-indicator {
+        bottom: var(--space-xl);
+    }
+}

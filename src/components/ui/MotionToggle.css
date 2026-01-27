@@ -1,0 +1,49 @@
+/* ========================================
+   MOTION TOGGLE STYLES
+   ======================================== */
+
+.motion-toggle {
+    position: fixed;
+    bottom: var(--space-xl);
+    left: var(--space-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-full);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.motion-toggle:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+}
+
+.toggle-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .motion-toggle {
+        bottom: var(--space-lg);
+        left: var(--space-lg);
+    }
+
+    .toggle-label {
+        display: none;
+    }
+}

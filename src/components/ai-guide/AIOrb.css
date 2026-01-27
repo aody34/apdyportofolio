@@ -1,0 +1,282 @@
+/* ========================================
+   AI ORB GUIDE STYLES
+   ======================================== */
+
+.ai-orb-container {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+/* Message Bubble */
+.ai-message-bubble {
+    position: absolute;
+    bottom: calc(100% + var(--space-md));
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-md) var(--space-lg);
+    max-width: 280px;
+    min-width: 200px;
+    box-shadow: var(--glass-shadow);
+}
+
+.ai-message-bubble p {
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ai-message-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 24px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--glass-border);
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: var(--space-xs) 0;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    30% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+
+/* The Orb Button */
+.ai-orb {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orb-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%;
+    overflow: visible;
+}
+
+/* Orb Core */
+.orb-core {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ec4899 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+}
+
+/* Orb Glow */
+.orb-glow {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Orb Ring */
+.orb-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 240, 255, 0.5);
+    animation: ringRotate 10s linear infinite;
+}
+
+@keyframes ringRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Orb Face */
+.orb-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orb-eyes {
+    display: flex;
+    gap: 10px;
+    transform: translateY(-4px);
+}
+
+.eye {
+    width: 6px;
+    height: 6px;
+    background: var(--bg-primary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Expression States */
+.ai-orb.happy .eye {
+    height: 3px;
+    border-radius: 3px;
+}
+
+.ai-orb.curious .eye {
+    width: 8px;
+    height: 8px;
+}
+
+.ai-orb.thinking .orb-eyes {
+    animation: lookAround 2s ease-in-out infinite;
+}
+
+@keyframes lookAround {
+
+    0%,
+    100% {
+        transform: translateY(-4px) translateX(0);
+    }
+
+    25% {
+        transform: translateY(-4px) translateX(-3px);
+    }
+
+    75% {
+        transform: translateY(-4px) translateX(3px);
+    }
+}
+
+/* Pulse Rings */
+.orb-pulse-ring {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-cyan);
+    opacity: 0;
+    animation: pulseRing 3s ease-out infinite;
+}
+
+.ring-2 {
+    animation-delay: 1s;
+}
+
+.ring-3 {
+    animation-delay: 2s;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Label */
+.ai-orb-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+}
+
+/* Hover State */
+.ai-orb:hover .orb-glow {
+    inset: -15px;
+    opacity: 1;
+}
+
+.ai-orb:hover .orb-core {
+    animation-duration: 2s;
+}
+
+/* Expanded State */
+.ai-orb-container.expanded .ai-orb {
+    width: 72px;
+    height: 72px;
+}
+
+.ai-orb-container.expanded .orb-pulse-ring {
+    border-color: var(--accent-purple);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .ai-orb-container {
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+    }
+
+    .ai-orb {
+        width: 56px;
+        height: 56px;
+    }
+
+    .ai-message-bubble {
+        max-width: 240px;
+        right: -10px;
+    }
+
+    .ai-orb-label {
+        display: none;
+    }
+}

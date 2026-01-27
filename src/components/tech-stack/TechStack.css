@@ -1,0 +1,125 @@
+/* ========================================
+   TECH STACK SECTION STYLES
+   ======================================== */
+
+.tech-stack {
+    position: relative;
+    background: var(--bg-primary);
+}
+
+.tech-label {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: var(--space-md);
+}
+
+/* Tech Grid */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+}
+
+/* Tech Card */
+.tech-card {
+    position: relative;
+    padding: var(--space-xl);
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.tech-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    filter: drop-shadow(0 0 20px var(--tech-color));
+}
+
+.tech-name {
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.tech-description {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+.tech-glow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, var(--tech-color) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.tech-card:hover .tech-glow {
+    opacity: 0.15;
+}
+
+/* Performance Badge */
+.performance-badge {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--space-lg) var(--space-xl);
+}
+
+.badge-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.badge-icon {
+    font-size: 2.5rem;
+}
+
+.badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.badge-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.badge-desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .tech-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .badge-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}

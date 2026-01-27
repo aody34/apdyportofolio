@@ -1,0 +1,81 @@
+/* ========================================
+   LOADING SCREEN STYLES
+   ======================================== */
+
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xl);
+    z-index: 10000;
+}
+
+/* Loading Orb */
+.loading-orb {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    box-shadow: var(--glow-cyan);
+}
+
+/* Text */
+.loading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.loading-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.loading-title {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+}
+
+/* Progress Bar */
+.loading-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 200px;
+}
+
+.progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--glass-border);
+    border-radius: var(--border-radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-full);
+}
+
+.progress-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--accent-cyan);
+    min-width: 40px;
+}
+
+/* Loading Message */
+.loading-message {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
