@@ -2,14 +2,8 @@ import { motion } from 'framer-motion';
 import './BlurText.css';
 
 /**
- * Blur Reveal Text Animation
- * Words emerge from digital mist with staggered timing
- * 
- * @param {string} text - The text to animate
- * @param {string} className - Additional CSS class
- * @param {number} delay - Initial delay before animation starts
- * @param {boolean} colorPulse - Enable purple-to-white color shift
- * @param {boolean} animate - Use animate instead of whileInView (for hero)
+ * Premium Blur Reveal Text Animation
+ * Each word emerges from digital mist with staggered timing
  */
 const BlurText = ({
     text,
@@ -24,7 +18,7 @@ const BlurText = ({
         hidden: {},
         visible: {
             transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.12,
                 delayChildren: delay
             }
         }
@@ -32,18 +26,20 @@ const BlurText = ({
 
     const wordVariants = {
         hidden: {
-            filter: 'blur(12px)',
+            filter: 'blur(20px)',
             opacity: 0,
-            y: 20,
+            y: 30,
+            scale: 0.9,
             ...(colorPulse && { color: '#a855f7' })
         },
         visible: {
             filter: 'blur(0px)',
             opacity: 1,
             y: 0,
+            scale: 1,
             ...(colorPulse && { color: '#ffffff' }),
             transition: {
-                duration: 0.8,
+                duration: 1,
                 ease: [0.16, 1, 0.3, 1]
             }
         }
@@ -63,7 +59,6 @@ const BlurText = ({
                         key={index}
                         className="blur-text-word"
                         variants={wordVariants}
-                        style={{ display: 'inline-block' }}
                     >
                         {word}
                         {index < words.length - 1 && '\u00A0'}
@@ -87,7 +82,6 @@ const BlurText = ({
                     key={index}
                     className="blur-text-word"
                     variants={wordVariants}
-                    style={{ display: 'inline-block' }}
                 >
                     {word}
                     {index < words.length - 1 && '\u00A0'}

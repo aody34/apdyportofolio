@@ -82,36 +82,41 @@
 
 /* Intro Line */
 .hero-intro {
-    font-family: var(--font-body);
-    font-size: var(--text-xl);
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 500;
     color: var(--text-secondary);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xl);
 }
 
 /* Main Title */
 .hero-title {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     margin-bottom: var(--space-xl);
 }
 
 .hero-title-line {
-    font-size: var(--text-4xl);
-    font-weight: 400;
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: 600;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
 }
 
 .hero-title-highlight {
-    font-size: var(--text-hero);
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 800;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1;
+    text-shadow: 0 0 80px rgba(0, 240, 255, 0.3);
 }
 
 /* Divider Line */
