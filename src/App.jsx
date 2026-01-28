@@ -8,6 +8,7 @@ import LoadingScreen from './components/ui/LoadingScreen';
 import Navigation from './components/ui/Navigation';
 import MotionToggle from './components/ui/MotionToggle';
 import CinematicHero from './components/landing/CinematicHero';
+import TechMarquee from './components/landing/TechMarquee';
 import AIOrb from './components/ai-guide/AIOrb';
 import About from './components/about/About';
 import SkillGalaxy from './components/skills/SkillGalaxy';
@@ -88,6 +89,7 @@ function App() {
                 {/* Sections */}
                 <main>
                     <CinematicHero mousePosition={normalizedPosition} />
+                    <TechMarquee />
                     <About />
                     <SkillGalaxy />
                     <Projects />

@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+import { useMagneticHover } from '../../hooks/useMagneticHover';
 import './CinematicHero.css';
 
 // 3D Floating Orb Component
@@ -11,7 +13,6 @@ const FloatingOrb = ({ mousePosition }) => {
 
     useFrame((state) => {
         if (meshRef.current) {
-            // Smooth follow mouse
             targetRotation.current.x = mousePosition.y * 0.3;
             targetRotation.current.y = mousePosition.x * 0.3;
 
@@ -26,7 +27,6 @@ const FloatingOrb = ({ mousePosition }) => {
                 0.05
             );
 
-            // Floating animation
             meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
         }
     });
@@ -87,12 +87,28 @@ const ParticleField = () => {
     );
 };
 
+// Masked Text Reveal Component
+const MaskedText = ({ children, delay = 0, className = '' }) => {
+    return (
+        <div className={`masked-text ${className}`}>
+            <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                transition={{
+                    duration: 1,
+                    delay: delay,
+                    ease: [0.16, 1, 0.3, 1]
+                }}
+            >
+                {children}
+            </motion.div>
+        </div>
+    );
+};
+
 const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
     const heroRef = useRef();
-
-    useEffect(() => {
-        // GSAP animations will be initialized here after GSAP loads
-    }, []);
+    const magnetic = useMagneticHover(0.15);
 
     return (
         <section ref={heroRef} className="hero" id="hero">
@@ -118,20 +134,65 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
             <div className="hero-content">
                 <div className="hero-grid">
                     <div className="hero-text-container">
-                        <p className="hero-intro">This is not a portfolio...</p>
+                        {/* Masked Text Reveals */}
+                        <MaskedText delay={0.5} className="hero-intro-wrapper">
+                            <p className="hero-intro">This is not a portfolio...</p>
+                        </MaskedText>
+
                         <h1 className="hero-title">
-                            <span className="hero-title-line">It's an</span>
-                            <span className="hero-title-highlight">Experience</span>
+                            <MaskedText delay={0.7}>
+                                <span className="hero-title-line">It's an</span>
+                            </MaskedText>
+                            <MaskedText delay={0.9}>
+                                <span className="hero-title-highlight">Experience</span>
+                            </MaskedText>
                         </h1>
-                        <div className="hero-divider" />
-                        <p className="hero-subtitle">
-                            Crafted by <span className="hero-name">Abdi Kadir Abdullahi</span>
-                        </p>
-                        <p className="hero-role">Frontend Developer & Creative Technologist</p>
+
+                        <motion.div
+                            className="hero-divider"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                        />
+
+                        <MaskedText delay={1.4}>
+                            <p className="hero-subtitle">
+                                Crafted by <span className="hero-name">Abdi Kadir Abdullahi</span>
+                            </p>
+                        </MaskedText>
+
+                        <MaskedText delay={1.6}>
+                            <p className="hero-role">Frontend Developer & Creative Technologist</p>
+                        </MaskedText>
+
+                        {/* Interactive CTA Button */}
+                        <motion.div
+                            className="hero-cta"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 2, duration: 0.6 }}
+                        >
+                            <a href="#projects" className="btn-play">
+                                <span className="btn-play-icon">▶</span>
+                                <span className="btn-play-text">Explore My Work</span>
+                                <span className="btn-play-bg"></span>
+                            </a>
+                        </motion.div>
                     </div>
 
-                    <div className="hero-image-container">
-                        <div className="hero-image-wrapper">
+                    {/* Magnetic Image Container */}
+                    <motion.div
+                        className="hero-image-container"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <div
+                            className="hero-image-wrapper"
+                            ref={magnetic.ref}
+                            {...magnetic.handlers}
+                            style={magnetic.style}
+                        >
                             <div className="hero-image-glow" />
                             <img
                                 src="/profile.jpg"
@@ -139,17 +200,23 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
                                 className="hero-profile-img"
                             />
                             <div className="hero-image-border" />
+                            <div className="hero-image-shine" />
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Scroll Indicator */}
-                <div className="hero-scroll-indicator">
+                <motion.div
+                    className="hero-scroll-indicator"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.5, duration: 0.6 }}
+                >
                     <span className="scroll-text">Scroll to explore</span>
                     <div className="scroll-line">
                         <div className="scroll-dot" />
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

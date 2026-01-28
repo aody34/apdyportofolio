@@ -1,0 +1,119 @@
+/* ========================================
+   TECH MARQUEE - Infinite Scroll
+   Premium "Expensive" Look
+   ======================================== */
+
+.tech-marquee {
+    position: relative;
+    padding: var(--space-xl) 0;
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+.marquee-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Gradient fade masks - the "expensive" secret */
+.marquee-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.marquee-mask-left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-secondary), transparent);
+}
+
+.marquee-mask-right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-secondary), transparent);
+}
+
+/* Marquee Track */
+.marquee-track {
+    display: flex;
+    width: max-content;
+}
+
+.marquee-content {
+    display: flex;
+    gap: var(--space-2xl);
+    animation: marqueeScroll 30s linear infinite;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover */
+.marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+/* Individual Item */
+.marquee-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-full);
+    transition: all 0.3s var(--ease-out-expo);
+    cursor: default;
+    white-space: nowrap;
+}
+
+.marquee-item:hover {
+    border-color: var(--item-color);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--item-color) 30%, transparent);
+    transform: scale(1.05);
+}
+
+.marquee-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 10px var(--item-color));
+}
+
+.marquee-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .marquee-mask {
+        width: 80px;
+    }
+
+    .marquee-content {
+        gap: var(--space-lg);
+    }
+
+    .marquee-item {
+        padding: var(--space-xs) var(--space-md);
+    }
+
+    .marquee-icon {
+        font-size: 1.2rem;
+    }
+
+    .marquee-name {
+        font-size: var(--text-xs);
+    }
+}

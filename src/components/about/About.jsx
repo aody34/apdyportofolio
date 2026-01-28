@@ -1,120 +1,144 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './About.css';
+
+const BentoCard = ({ children, className = '', delay = 0, size = 'default' }) => {
+    return (
+        <motion.div
+            className={`bento-card glass-card ${size} ${className}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+                delay,
+                duration: 0.6,
+                ease: [0.16, 1, 0.3, 1]
+            }}
+            whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.3 }
+            }}
+        >
+            {children}
+        </motion.div>
+    );
+};
 
 const About = () => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 40 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-        }
-    };
-
     return (
         <section className="about section" id="about" ref={ref}>
             <div className="container">
+                {/* Section Header */}
                 <motion.div
-                    className="about-content"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
+                    className="about-header section-header"
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8 }}
                 >
-                    {/* Section Header */}
-                    <motion.div className="about-header" variants={itemVariants}>
-                        <span className="about-label">About</span>
-                        <h2 className="about-title">
-                            The <span className="gradient-text">Journey</span>
-                        </h2>
-                    </motion.div>
+                    <span className="about-label">About</span>
+                    <h2 className="section-title">The Journey</h2>
+                </motion.div>
 
-                    {/* Main Story */}
-                    <motion.div className="about-story" variants={itemVariants}>
-                        <p className="about-lead">
-                            I am a 2022 Bachelor of Information Technology graduate, currently
-                            navigating my path in life while combining my technical background
-                            with a deep passion for content creation.
-                        </p>
-                    </motion.div>
-
-                    {/* Experience Cards */}
-                    <motion.div className="about-experience" variants={itemVariants}>
-                        <div className="experience-card glass-card">
-                            <div className="experience-icon">🎬</div>
-                            <h3>Content Creator</h3>
-                            <p>
-                                My experience as a Video Shooter taught me the power of angles,
-                                perspective, and visual storytelling—skills I now bring into
+                {/* Bento Grid Layout */}
+                <div className="bento-grid">
+                    {/* Large Card - Philosophy */}
+                    <BentoCard size="large" delay={0.1}>
+                        <div className="bento-content">
+                            <div className="bento-icon">🎯</div>
+                            <h3 className="bento-title">Who I Am</h3>
+                            <p className="bento-text">
+                                I am a 2022 Bachelor of Information Technology graduate,
+                                combining my technical background with a deep passion
+                                for content creation and visual storytelling.
+                            </p>
+                            <p className="bento-text secondary">
+                                My experience as a Video Shooter taught me the power of
+                                angles, perspective, and motion—skills I now bring into
                                 frontend development.
                             </p>
                         </div>
+                    </BentoCard>
 
-                        <div className="experience-card glass-card">
-                            <div className="experience-icon">💻</div>
-                            <h3>Frontend Developer</h3>
-                            <p>
-                                Blending code, animation, and visual storytelling to build
-                                immersive web experiences that feel alive and meaningful.
+                    {/* Small Card - Location */}
+                    <BentoCard size="small" delay={0.2}>
+                        <div className="bento-content location">
+                            <span className="bento-emoji">📍</span>
+                            <span className="bento-label">Based in</span>
+                            <span className="bento-value">Somalia</span>
+                            <span className="bento-sublabel">Available Worldwide</span>
+                        </div>
+                    </BentoCard>
+
+                    {/* Small Card - Status */}
+                    <BentoCard size="small" delay={0.3}>
+                        <div className="bento-content status">
+                            <span className="status-dot"></span>
+                            <span className="bento-label">Status</span>
+                            <span className="bento-value">Open to Work</span>
+                            <span className="bento-sublabel">Freelance & Full-time</span>
+                        </div>
+                    </BentoCard>
+
+                    {/* Medium Card - Currently Building */}
+                    <BentoCard size="medium" delay={0.4}>
+                        <div className="bento-content now">
+                            <div className="bento-icon">🔨</div>
+                            <h3 className="bento-title">Currently Building</h3>
+                            <div className="now-projects">
+                                <div className="now-project">
+                                    <span className="now-emoji">📈</span>
+                                    <span>MemeRadar - Crypto Analysis</span>
+                                </div>
+                                <div className="now-project">
+                                    <span className="now-emoji">🎬</span>
+                                    <span>Cinematic Web Experiences</span>
+                                </div>
+                                <div className="now-project">
+                                    <span className="now-emoji">🤖</span>
+                                    <span>AI-Powered Tools</span>
+                                </div>
+                            </div>
+                        </div>
+                    </BentoCard>
+
+                    {/* Medium Card - Experience */}
+                    <BentoCard size="medium" delay={0.5}>
+                        <div className="bento-content experience">
+                            <div className="exp-stats">
+                                <div className="exp-stat">
+                                    <span className="exp-number">3+</span>
+                                    <span className="exp-label">Years Creating</span>
+                                </div>
+                                <div className="exp-stat">
+                                    <span className="exp-number">10+</span>
+                                    <span className="exp-label">Projects</span>
+                                </div>
+                                <div className="exp-stat">
+                                    <span className="exp-number">∞</span>
+                                    <span className="exp-label">Learning</span>
+                                </div>
+                            </div>
+                        </div>
+                    </BentoCard>
+
+                    {/* Small Card - Quote */}
+                    <BentoCard size="quote" delay={0.6}>
+                        <div className="bento-content quote">
+                            <span className="quote-mark">"</span>
+                            <p className="quote-text">
+                                Still navigating my path in life, but we will be better,
+                                <span className="quote-highlight"> Insha'Allah.</span>
                             </p>
                         </div>
-
-                        <div className="experience-card glass-card">
-                            <div className="experience-icon">📈</div>
-                            <h3>Crypto Trader</h3>
-                            <p>
-                                Understanding markets, patterns, and timing—skills that translate
-                                to building responsive, data-driven interfaces.
-                            </p>
-                        </div>
-                    </motion.div>
-
-                    {/* Personal Note */}
-                    <motion.div className="about-personal" variants={itemVariants}>
-                        <blockquote className="about-quote">
-                            <p>
-                                "Still missing what I want in life, but we will be better,
-                                <span className="quote-highlight"> Insha'Allah.</span>"
-                            </p>
-                        </blockquote>
-                    </motion.div>
-
-                    {/* Stats */}
-                    <motion.div className="about-stats" variants={itemVariants}>
-                        <div className="stat-item">
-                            <span className="stat-number">2022</span>
-                            <span className="stat-label">IT Graduate</span>
-                        </div>
-                        <div className="stat-divider" />
-                        <div className="stat-item">
-                            <span className="stat-number">3+</span>
-                            <span className="stat-label">Years Creating</span>
-                        </div>
-                        <div className="stat-divider" />
-                        <div className="stat-item">
-                            <span className="stat-number">∞</span>
-                            <span className="stat-label">Learning</span>
-                        </div>
-                    </motion.div>
-                </motion.div>
+                    </BentoCard>
+                </div>
             </div>
 
-            {/* Background elements */}
-            <div className="about-bg-gradient" />
+            {/* Background */}
+            <div className="about-bg-glow" />
         </section>
     );
 };
