@@ -70,9 +70,9 @@ const Contact = () => {
     const socialLinks = [
         {
             name: 'Email',
-            href: 'mailto:apdykadir41@gmail.com',
+            href: 'mailto:youngdev34@gmail.com',
             icon: '✉️',
-            label: 'apdykadir41@gmail.com'
+            label: 'youngdev34@gmail.com'
         },
         {
             name: 'GitHub',

@@ -147,7 +147,7 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
 
                         {/* Subtitle with Blur Reveal */}
                         <BlurText
-                            text="Crafted by Abdi Kadir Abdullahi"
+                            text="Crafted by Youngdev"
                             className="hero-subtitle"
                             delay={1.4}
                         />
@@ -156,6 +156,12 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
                             text="Frontend Developer & Creative Technologist"
                             className="hero-role"
                             delay={1.6}
+                        />
+
+                        <BlurText
+                            text="Crypto Developer & Trader"
+                            className="hero-role hero-role-crypto"
+                            delay={1.8}
                         />
 
                         {/* Interactive CTA Button */}

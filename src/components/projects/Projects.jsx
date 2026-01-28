@@ -38,11 +38,12 @@ const ProjectCard = ({ project, index, size = 'default' }) => {
     return (
         <motion.div
             ref={cardRef}
-            className={`project-card glass-card ${size}`}
+            className={`project-card glass-card ${size} ${project.image ? 'has-image' : ''}`}
             style={{
                 rotateX,
                 rotateY,
-                '--project-color': project.color
+                '--project-color': project.color,
+                backgroundImage: project.image ? `url(${project.image})` : 'none'
             }}
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
@@ -53,6 +54,9 @@ const ProjectCard = ({ project, index, size = 'default' }) => {
             transition={{ delay: index * 0.1, duration: 0.6 }}
             whileHover={{ scale: 1.02 }}
         >
+            {/* Background overlay for image cards */}
+            {project.image && <div className="project-image-overlay" />}
+
             {/* Spotlight effect */}
             <div
                 className="project-spotlight"

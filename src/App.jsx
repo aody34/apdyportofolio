@@ -112,7 +112,7 @@ function App() {
                 <footer className="footer">
                     <div className="container">
                         <p className="footer-text">
-                            Crafted with 💙 by <span className="footer-name">Abdi Kadir Abdullahi</span>
+                            Crafted with 💙 by <span className="footer-name">Youngdev</span>
                         </p>
                         <p className="footer-year">© 2024</p>
                     </div>
