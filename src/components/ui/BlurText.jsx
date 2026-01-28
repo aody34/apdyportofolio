@@ -9,14 +9,14 @@ import './BlurText.css';
  * @param {string} className - Additional CSS class
  * @param {number} delay - Initial delay before animation starts
  * @param {boolean} colorPulse - Enable purple-to-white color shift
- * @param {string} as - HTML element type (h1, h2, p, span)
+ * @param {boolean} animate - Use animate instead of whileInView (for hero)
  */
 const BlurText = ({
     text,
     className = '',
     delay = 0,
     colorPulse = false,
-    as: Component = 'div'
+    animateOnLoad = true
 }) => {
     const words = text.split(' ');
 
@@ -24,7 +24,7 @@ const BlurText = ({
         hidden: {},
         visible: {
             transition: {
-                staggerChildren: 0.08,
+                staggerChildren: 0.1,
                 delayChildren: delay
             }
         }
@@ -32,9 +32,9 @@ const BlurText = ({
 
     const wordVariants = {
         hidden: {
-            filter: 'blur(10px)',
+            filter: 'blur(12px)',
             opacity: 0,
-            y: 8,
+            y: 20,
             ...(colorPulse && { color: '#a855f7' })
         },
         visible: {
@@ -43,89 +43,57 @@ const BlurText = ({
             y: 0,
             ...(colorPulse && { color: '#ffffff' }),
             transition: {
-                duration: 0.6,
+                duration: 0.8,
                 ease: [0.16, 1, 0.3, 1]
             }
         }
     };
 
+    // For hero section - animate on load
+    if (animateOnLoad) {
+        return (
+            <motion.div
+                className={`blur-text ${className}`}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                {words.map((word, index) => (
+                    <motion.span
+                        key={index}
+                        className="blur-text-word"
+                        variants={wordVariants}
+                        style={{ display: 'inline-block' }}
+                    >
+                        {word}
+                        {index < words.length - 1 && '\u00A0'}
+                    </motion.span>
+                ))}
+            </motion.div>
+        );
+    }
+
+    // For sections below - animate when in view
     return (
         <motion.div
             className={`blur-text ${className}`}
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, margin: "-100px" }}
         >
             {words.map((word, index) => (
                 <motion.span
                     key={index}
                     className="blur-text-word"
                     variants={wordVariants}
+                    style={{ display: 'inline-block' }}
                 >
                     {word}
                     {index < words.length - 1 && '\u00A0'}
                 </motion.span>
             ))}
         </motion.div>
-    );
-};
-
-/**
- * Character-by-character blur reveal for dramatic effect
- */
-export const BlurTextCharacter = ({
-    text,
-    className = '',
-    delay = 0
-}) => {
-    const characters = text.split('');
-
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: {
-                staggerChildren: 0.03,
-                delayChildren: delay
-            }
-        }
-    };
-
-    const charVariants = {
-        hidden: {
-            filter: 'blur(8px)',
-            opacity: 0,
-            y: 5
-        },
-        visible: {
-            filter: 'blur(0px)',
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.4,
-                ease: 'easeOut'
-            }
-        }
-    };
-
-    return (
-        <motion.span
-            className={`blur-text-chars ${className}`}
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-        >
-            {characters.map((char, index) => (
-                <motion.span
-                    key={index}
-                    className="blur-text-char"
-                    variants={charVariants}
-                >
-                    {char === ' ' ? '\u00A0' : char}
-                </motion.span>
-            ))}
-        </motion.span>
     );
 };
 

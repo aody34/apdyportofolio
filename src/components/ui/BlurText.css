@@ -4,38 +4,28 @@
    ======================================== */
 
 .blur-text {
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
+    gap: 0;
 }
 
 .blur-text-word {
     display: inline-block;
     will-change: filter, opacity, transform;
-}
-
-.blur-text-chars {
-    display: inline-block;
-}
-
-.blur-text-char {
-    display: inline-block;
-    will-change: filter, opacity, transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Reduce animation duration on mobile for performance */
 @media (max-width: 768px) {
-
-    .blur-text-word,
-    .blur-text-char {
-        transition-duration: 0.3s !important;
+    .blur-text-word {
+        transition-duration: 0.4s !important;
     }
 }
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-
-    .blur-text-word,
-    .blur-text-char {
+    .blur-text-word {
         filter: none !important;
         opacity: 1 !important;
         transform: none !important;
