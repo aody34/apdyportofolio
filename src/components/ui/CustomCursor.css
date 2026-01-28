@@ -1,0 +1,81 @@
+/* ========================================
+   CUSTOM CURSOR
+   Premium Interactive Effect
+   ======================================== */
+
+/* Hide default cursor */
+* {
+    cursor: none !important;
+}
+
+/* Outer ring */
+.custom-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--accent-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s var(--ease-out-expo),
+        height 0.3s var(--ease-out-expo),
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+    mix-blend-mode: difference;
+}
+
+.custom-cursor.expanded {
+    width: 60px;
+    height: 60px;
+    border-color: var(--accent-purple);
+    background-color: rgba(168, 85, 247, 0.1);
+}
+
+.custom-cursor.hidden {
+    opacity: 0;
+}
+
+/* Inner dot */
+.custom-cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s var(--ease-out-expo),
+        height 0.2s var(--ease-out-expo),
+        opacity 0.2s ease;
+}
+
+.custom-cursor-dot.expanded {
+    width: 4px;
+    height: 4px;
+    opacity: 0.5;
+}
+
+.custom-cursor-dot.hidden {
+    opacity: 0;
+}
+
+/* Restore cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    * {
+        cursor: auto !important;
+    }
+
+    .custom-cursor,
+    .custom-cursor-dot {
+        display: none !important;
+    }
+}
+
+/* Restore cursor for inputs */
+input,
+textarea,
+select {
+    cursor: text !important;
+}

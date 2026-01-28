@@ -1,129 +1,114 @@
-import { useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { projects } from '../../data/projects';
 import './Projects.css';
 
-const ProjectChapter = ({ project, index }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+// 3D Tilt Card Component with Spotlight
+const ProjectCard = ({ project, index, size = 'default' }) => {
+    const cardRef = useRef(null);
+    const [isHovered, setIsHovered] = useState(false);
 
-    const isEven = index % 2 === 0;
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.2
-            }
-        }
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), {
+        damping: 20,
+        stiffness: 300
+    });
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), {
+        damping: 20,
+        stiffness: 300
+    });
+
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        mouseX.set(x);
+        mouseY.set(y);
     };
 
-    const itemVariants = {
-        hidden: {
-            opacity: 0,
-            x: isEven ? -60 : 60
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-        }
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        mouseX.set(0);
+        mouseY.set(0);
     };
 
     return (
-        <article
-            ref={ref}
-            className={`project-chapter ${isEven ? 'left' : 'right'}`}
-            style={{ '--project-color': project.color }}
+        <motion.div
+            ref={cardRef}
+            className={`project-card glass-card ${size}`}
+            style={{
+                rotateX,
+                rotateY,
+                '--project-color': project.color
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={handleMouseLeave}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.1, duration: 0.6 }}
+            whileHover={{ scale: 1.02 }}
         >
-            <motion.div
-                className="project-content"
-                variants={containerVariants}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-            >
-                {/* Chapter Number */}
-                <motion.div className="chapter-number" variants={itemVariants}>
-                    <span>Chapter</span>
-                    <span className="number">0{index + 1}</span>
-                </motion.div>
-
-                {/* Project Header */}
-                <motion.div className="project-header" variants={itemVariants}>
-                    <span className="project-year">{project.year}</span>
-                    <h3 className="project-title">{project.title}</h3>
-                    <p className="project-subtitle">{project.subtitle}</p>
-                </motion.div>
-
-                {/* Story Sections */}
-                <div className="project-story">
-                    <motion.div className="story-section" variants={itemVariants}>
-                        <div className="story-icon">💭</div>
-                        <div className="story-content">
-                            <h4>The Problem</h4>
-                            <p>{project.problem}</p>
-                        </div>
-                    </motion.div>
-
-                    <motion.div className="story-section" variants={itemVariants}>
-                        <div className="story-icon">💡</div>
-                        <div className="story-content">
-                            <h4>The Solution</h4>
-                            <p>{project.solution}</p>
-                        </div>
-                    </motion.div>
-
-                    <motion.div className="story-section tech-section" variants={itemVariants}>
-                        <div className="story-icon">⚡</div>
-                        <div className="story-content">
-                            <h4>Tech Stack</h4>
-                            <div className="tech-tags">
-                                {project.tech.map((tech, i) => (
-                                    <span key={i} className="tech-tag">{tech}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div className="story-section result-section" variants={itemVariants}>
-                        <div className="story-icon">🎯</div>
-                        <div className="story-content">
-                            <h4>The Result</h4>
-                            <p>{project.result}</p>
-
-                            {/* Metrics */}
-                            <div className="project-metrics">
-                                {Object.entries(project.metrics).map(([key, value]) => (
-                                    <div key={key} className="metric-item">
-                                        <span className="metric-value">{value}</span>
-                                        <span className="metric-label">{key}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-            </motion.div>
-
-            {/* Decorative Line */}
-            <motion.div
-                className="project-line"
-                initial={{ scaleY: 0 }}
-                animate={isInView ? { scaleY: 1 } : {}}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            {/* Spotlight effect */}
+            <div
+                className="project-spotlight"
+                style={{ opacity: isHovered ? 1 : 0 }}
             />
 
-            {/* Background Glow */}
-            <div className="project-glow" />
-        </article>
+            {/* Live badge */}
+            {project.isLive && (
+                <div className="project-badge live">
+                    <span className="badge-dot"></span>
+                    Live
+                </div>
+            )}
+
+            {/* Project content */}
+            <div className="project-content">
+                <span className="project-year">{project.year}</span>
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-problem">{project.problem}</p>
+
+                <div className="project-tech">
+                    {project.tech.slice(0, 4).map((tech, i) => (
+                        <span key={i} className="tech-tag">{tech}</span>
+                    ))}
+                </div>
+
+                {/* Metrics */}
+                <div className="project-metrics">
+                    {Object.entries(project.metrics).slice(0, 2).map(([key, value]) => (
+                        <div key={key} className="metric">
+                            <span className="metric-value">{value}</span>
+                            <span className="metric-label">{key}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Hover glow */}
+            <div
+                className="project-glow"
+                style={{ opacity: isHovered ? 1 : 0 }}
+            />
+        </motion.div>
     );
 };
 
 const Projects = () => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-50px" });
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+    // Assign sizes for bento layout
+    const getSizeForIndex = (index) => {
+        if (index === 0) return 'large';  // First project is 2x2
+        if (index === 1) return 'medium'; // Second is medium
+        return 'default';
+    };
 
     return (
         <section className="projects section" id="projects" ref={ref}>
@@ -133,28 +118,30 @@ const Projects = () => {
                     className="projects-header section-header"
                     initial={{ opacity: 0, y: 40 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.8 }}
                 >
                     <span className="projects-label">Work</span>
-                    <h2 className="section-title">Projects</h2>
+                    <h2 className="section-title">Selected Projects</h2>
                     <p className="section-subtitle">
-                        Each project is a chapter in my story. Scroll to explore.
+                        Building high-performance on-chain tools and automated systems
                     </p>
                 </motion.div>
 
-                {/* Project Timeline */}
-                <div className="projects-timeline">
-                    <div className="timeline-line" />
-
+                {/* Bento Grid */}
+                <div className="projects-bento">
                     {projects.map((project, index) => (
-                        <ProjectChapter
+                        <ProjectCard
                             key={project.id}
                             project={project}
                             index={index}
+                            size={getSizeForIndex(index)}
                         />
                     ))}
                 </div>
             </div>
+
+            {/* Background */}
+            <div className="projects-bg-glow" />
         </section>
     );
 };

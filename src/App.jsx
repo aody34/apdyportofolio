@@ -7,6 +7,7 @@ import { useReducedMotion } from './hooks/useReducedMotion';
 import LoadingScreen from './components/ui/LoadingScreen';
 import Navigation from './components/ui/Navigation';
 import MotionToggle from './components/ui/MotionToggle';
+import CustomCursor from './components/ui/CustomCursor';
 import CinematicHero from './components/landing/CinematicHero';
 import TechMarquee from './components/landing/TechMarquee';
 import AIOrb from './components/ai-guide/AIOrb';
@@ -64,7 +65,13 @@ function App() {
             {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
             {/* Main Content */}
+            {/* Custom Cursor */}
+            <CustomCursor />
+
             <div className={`app ${isLoading ? 'is-loading' : ''}`}>
+                {/* Moving Glow Background */}
+                <div className="moving-glow" aria-hidden="true" />
+
                 {/* Noise Overlay for texture */}
                 <div className="noise-overlay" aria-hidden="true" />
 
