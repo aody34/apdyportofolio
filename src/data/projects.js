@@ -15,6 +15,7 @@ export const projects = [
         },
         color: '#00f0ff',
         image: '/memeradar-bg.png',
+        link: 'https://github.com/aody34',
         year: '2024',
         featured: true,
         isLive: true
@@ -33,6 +34,7 @@ export const projects = [
         },
         color: '#a855f7',
         image: '/portfolio-bg.png',
+        link: 'https://github.com/aody34/apdyportofolio',
         year: '2024',
         featured: true,
         isLive: true
@@ -51,6 +53,7 @@ export const projects = [
         },
         color: '#10b981',
         image: '/landing-bg.png',
+        link: 'https://github.com/aody34',
         year: '2024',
         featured: false,
         isLive: false

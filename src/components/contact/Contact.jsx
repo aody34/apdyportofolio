@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './Contact.css';
 
@@ -66,13 +66,22 @@ const AnimatedText = ({ text, className = '', delay = 0 }) => {
 const Contact = () => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyEmail = (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText('youngdev34@gmail.com');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     const socialLinks = [
         {
             name: 'Email',
             href: 'mailto:youngdev34@gmail.com',
             icon: '✉️',
-            label: 'youngdev34@gmail.com'
+            label: 'youngdev34@gmail.com',
+            action: handleCopyEmail
         },
         {
             name: 'GitHub',
@@ -122,7 +131,7 @@ const Contact = () => {
                     transition={{ duration: 0.6, delay: 1 }}
                 >
                     <MagneticButton
-                        href="mailto:apdykadir41@gmail.com"
+                        href="mailto:youngdev34@gmail.com"
                         className="cta-button-large"
                     >
                         <span className="cta-text">Say Hello</span>
@@ -142,15 +151,18 @@ const Contact = () => {
                             key={link.name}
                             href={link.href}
                             className="social-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            target={link.name === 'Email' ? undefined : "_blank"}
+                            rel={link.name === 'Email' ? undefined : "noopener noreferrer"}
+                            onClick={link.action}
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
                             transition={{ delay: 1.3 + index * 0.1 }}
                             whileHover={{ y: -5 }}
                         >
                             <span className="social-icon">{link.icon}</span>
-                            <span className="social-label">{link.label}</span>
+                            <span className="social-label">
+                                {link.name === 'Email' && copied ? 'Copied to clipboard! ✅' : link.label}
+                            </span>
                         </motion.a>
                     ))}
                 </motion.div>
