@@ -206,6 +206,28 @@ a:hover {
   color: var(--accent-cyan);
 }
 
+/* Animated Underline Link */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transition: all 0.3s var(--ease-out-expo);
+  transform: translateX(-50%);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
 /* === Layout Utilities === */
 .container {
   width: 100%;

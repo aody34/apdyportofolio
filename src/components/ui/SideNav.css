@@ -1,0 +1,69 @@
+/* ========================================
+   MAGNETIC SIDE NAVIGATION
+   Floating dots with labels on hover
+   ======================================== */
+
+.side-nav {
+    position: fixed;
+    right: var(--space-xl);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.side-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-md);
+    cursor: pointer;
+    padding: var(--space-sm);
+}
+
+.side-nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--glass-border);
+    border: 2px solid transparent;
+    transition: all 0.3s var(--ease-out-expo);
+}
+
+.side-nav-item:hover .side-nav-dot {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+    transform: scale(1.2);
+}
+
+.side-nav-item.active .side-nav-dot {
+    background: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+}
+
+.side-nav-label {
+    position: absolute;
+    right: 100%;
+    margin-right: var(--space-md);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .side-nav {
+        display: none;
+    }
+}

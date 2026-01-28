@@ -1,0 +1,30 @@
+/* ========================================
+   IMAGE REVEAL ANIMATION
+   Clip-path curtain effect
+   ======================================== */
+
+.image-reveal {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg);
+}
+
+.image-reveal-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--accent-cyan);
+    z-index: 2;
+}
+
+.image-reveal-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image-reveal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

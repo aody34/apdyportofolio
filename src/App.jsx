@@ -8,6 +8,8 @@ import LoadingScreen from './components/ui/LoadingScreen';
 import Navigation from './components/ui/Navigation';
 import MotionToggle from './components/ui/MotionToggle';
 import CustomCursor from './components/ui/CustomCursor';
+import SmoothScroll from './components/ui/SmoothScroll';
+import SideNav from './components/ui/SideNav';
 import CinematicHero from './components/landing/CinematicHero';
 import TechMarquee from './components/landing/TechMarquee';
 import AIOrb from './components/ai-guide/AIOrb';
@@ -60,13 +62,15 @@ function App() {
     };
 
     return (
-        <>
+        <SmoothScroll>
             {/* Loading Screen */}
             {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
-            {/* Main Content */}
             {/* Custom Cursor */}
             <CustomCursor />
+
+            {/* Side Navigation */}
+            <SideNav />
 
             <div className={`app ${isLoading ? 'is-loading' : ''}`}>
                 {/* Moving Glow Background */}
@@ -114,7 +118,7 @@ function App() {
                     </div>
                 </footer>
             </div>
-        </>
+        </SmoothScroll>
     );
 }
 
