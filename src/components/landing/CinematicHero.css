@@ -303,6 +303,8 @@
 
     .hero-text-side {
         align-items: center;
+        order: 2;
+        /* Text below image on mobile */
     }
 
     .hero-divider {
@@ -311,26 +313,33 @@
     }
 
     .hero-visual-side {
-        order: -1;
+        order: 1;
+        /* Image on top on mobile */
+        margin-bottom: var(--space-md);
     }
 
     .hero-image-container {
-        max-width: 300px;
-        aspect-ratio: 1;
+        max-width: 320px;
+        aspect-ratio: 4/5;
     }
 }
 
 @media (max-width: 768px) {
     .hero-title-main {
-        font-size: clamp(3rem, 15vw, 5rem);
+        font-size: clamp(3rem, 12vw, 4.5rem);
     }
 
     .hero-intro {
         font-size: var(--text-sm);
         letter-spacing: 0.2em;
+        margin-bottom: var(--space-md);
     }
 
     .hero-image-container {
-        max-width: 250px;
+        max-width: 260px;
+    }
+
+    .hero-content {
+        padding: 0 var(--space-lg);
     }
 }
