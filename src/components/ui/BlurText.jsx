@@ -24,7 +24,7 @@ const BlurText = ({
         hidden: {},
         visible: {
             transition: {
-                staggerChildren: 0.1,
+                staggerChildren: 0.04,
                 delayChildren: delay
             }
         }
@@ -43,7 +43,7 @@ const BlurText = ({
             y: 0,
             ...(colorPulse && { color: '#ffffff' }),
             transition: {
-                duration: 0.8,
+                duration: 0.6,
                 ease: [0.16, 1, 0.3, 1]
             }
         }

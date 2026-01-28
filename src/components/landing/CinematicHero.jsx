@@ -152,6 +152,17 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
                                 <span className="btn-play-bg"></span>
                             </a>
                         </motion.div>
+
+                        {/* Status Indicator */}
+                        <motion.div
+                            className="hero-status"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 3.5, duration: 1 }}
+                        >
+                            <span className="status-dot"></span>
+                            <span className="status-text">Building in Public: <span className="status-highlight">MemeRadar</span></span>
+                        </motion.div>
                     </div>
 
                     {/* Right Side - Rectangle with Profile Image */}

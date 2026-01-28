@@ -52,7 +52,11 @@ const ProjectCard = ({ project, index, size = 'default' }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{
+                scale: 1.02,
+                y: -8,
+                transition: { duration: 0.2 }
+            }}
         >
             {/* Background overlay for image cards */}
             {project.image && <div className="project-image-overlay" />}

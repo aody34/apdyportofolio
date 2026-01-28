@@ -88,6 +88,20 @@
     opacity: 1;
     transform: translateX(0);
     color: var(--accent-cyan);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    position: relative;
+}
+
+.nav-item.active .nav-label::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 5px var(--accent-cyan);
+    border-radius: 2px;
 }
 
 /* Mobile - hide side nav */

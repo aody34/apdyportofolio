@@ -222,6 +222,36 @@
     opacity: 0.1;
 }
 
+/* Status Indicator */
+.hero-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.03);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius-full);
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+    animation: pulse 2s infinite;
+}
+
+.status-highlight {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 /* ========================================
    RIGHT SIDE - IMAGE RECTANGLE
    ======================================== */
