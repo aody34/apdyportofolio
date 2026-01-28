@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { useMagneticHover } from '../../hooks/useMagneticHover';
+import BlurText from '../ui/BlurText';
 import './CinematicHero.css';
 
 // 3D Floating Orb Component
@@ -87,25 +88,6 @@ const ParticleField = () => {
     );
 };
 
-// Masked Text Reveal Component
-const MaskedText = ({ children, delay = 0, className = '' }) => {
-    return (
-        <div className={`masked-text ${className}`}>
-            <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                transition={{
-                    duration: 1,
-                    delay: delay,
-                    ease: [0.16, 1, 0.3, 1]
-                }}
-            >
-                {children}
-            </motion.div>
-        </div>
-    );
-};
-
 const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
     const heroRef = useRef();
     const magnetic = useMagneticHover(0.15);
@@ -134,18 +116,26 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
             <div className="hero-content">
                 <div className="hero-grid">
                     <div className="hero-text-container">
-                        {/* Masked Text Reveals */}
-                        <MaskedText delay={0.5} className="hero-intro-wrapper">
-                            <p className="hero-intro">This is not a portfolio...</p>
-                        </MaskedText>
+                        {/* Blur Reveal Intro */}
+                        <BlurText
+                            text="This is not a portfolio..."
+                            className="hero-intro"
+                            delay={0.3}
+                        />
 
+                        {/* Title with Blur Reveal */}
                         <h1 className="hero-title">
-                            <MaskedText delay={0.7}>
-                                <span className="hero-title-line">It's an</span>
-                            </MaskedText>
-                            <MaskedText delay={0.9}>
-                                <span className="hero-title-highlight">Experience</span>
-                            </MaskedText>
+                            <BlurText
+                                text="It's an"
+                                className="hero-title-line"
+                                delay={0.5}
+                            />
+                            <BlurText
+                                text="Experience"
+                                className="hero-title-highlight"
+                                delay={0.8}
+                                colorPulse={true}
+                            />
                         </h1>
 
                         <motion.div
@@ -155,15 +145,18 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
                             transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
                         />
 
-                        <MaskedText delay={1.4}>
-                            <p className="hero-subtitle">
-                                Crafted by <span className="hero-name">Abdi Kadir Abdullahi</span>
-                            </p>
-                        </MaskedText>
+                        {/* Subtitle with Blur Reveal */}
+                        <BlurText
+                            text="Crafted by Abdi Kadir Abdullahi"
+                            className="hero-subtitle"
+                            delay={1.4}
+                        />
 
-                        <MaskedText delay={1.6}>
-                            <p className="hero-role">Frontend Developer & Creative Technologist</p>
-                        </MaskedText>
+                        <BlurText
+                            text="Frontend Developer & Creative Technologist"
+                            className="hero-role"
+                            delay={1.6}
+                        />
 
                         {/* Interactive CTA Button */}
                         <motion.div

@@ -88,6 +88,7 @@
     color: var(--text-secondary);
     letter-spacing: 0.2em;
     text-transform: uppercase;
+    margin-bottom: var(--space-lg);
 }
 
 /* Main Title */
@@ -102,7 +103,6 @@
     font-size: var(--text-4xl);
     font-weight: 400;
     color: var(--text-primary);
-    display: block;
 }
 
 .hero-title-highlight {
@@ -112,8 +112,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    display: block;
-    animation: glow 3s ease-in-out infinite;
 }
 
 /* Divider Line */
