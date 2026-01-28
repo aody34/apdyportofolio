@@ -1,4 +1,4 @@
-// Projects Data - Scroll-based storytelling
+// Projects Data - With Background Images
 export const projects = [
     {
         id: 1,
@@ -14,7 +14,7 @@ export const projects = [
             accuracy: '94%'
         },
         color: '#00f0ff',
-        image: null,
+        image: '/memeradar-bg.png',
         year: '2024',
         featured: true,
         isLive: true
@@ -29,11 +29,10 @@ export const projects = [
         result: 'Created a memorable, immersive experience that visually represents both technical and creative skills.',
         metrics: {
             performance: '95+',
-            animations: '60 FPS',
-            sections: '5'
+            animations: '60 FPS'
         },
         color: '#a855f7',
-        image: null,
+        image: '/portfolio-bg.png',
         year: '2024',
         featured: true,
         isLive: true
@@ -41,29 +40,19 @@ export const projects = [
     {
         id: 3,
         title: 'Animated Landing Page',
-        subtitle: 'For Content Creators',
+        subtitle: 'Premium Web Experiences',
         problem: 'Content creators struggle to stand out. Generic templates kill authenticity.',
-        solution: 'Built a visually engaging landing page focused on motion, transitions, and storytelling.',
+        solution: 'Created custom animated landing pages with attention-grabbing visuals and smooth interactions.',
         tech: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
-        result: 'Improved user engagement and brand perception through motion-driven UX.',
+        result: 'Increased engagement by 40% and reduced bounce rate by 25% compared to static alternatives.',
         metrics: {
             engagement: '+40%',
-            bounce: '-25%',
-            shares: 'Viral'
+            bounce: '-25%'
         },
-        color: '#ec4899',
-        image: null,
+        color: '#10b981',
+        image: '/landing-bg.png',
         year: '2024',
-        featured: true,
+        featured: false,
         isLive: false
     }
 ];
-
-// Project chapter backgrounds for scroll transitions
-export const projectBackgrounds = {
-    1: 'linear-gradient(135deg, #050508 0%, #0a1628 100%)',
-    2: 'linear-gradient(135deg, #050508 0%, #1a0a28 100%)',
-    3: 'linear-gradient(135deg, #050508 0%, #280a1a 100%)'
-};
-
-export default projects;

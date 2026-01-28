@@ -1,90 +1,64 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial } from '@react-three/drei';
-import * as THREE from 'three';
+import { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useMagneticHover } from '../../hooks/useMagneticHover';
-import BlurText from '../ui/BlurText';
 import './CinematicHero.css';
 
-// 3D Floating Orb Component
-const FloatingOrb = ({ mousePosition }) => {
-    const meshRef = useRef();
-    const targetRotation = useRef({ x: 0, y: 0 });
+// Typewriter Animation Component
+const TypewriterText = ({ text, delay = 0 }) => {
+    const [displayedText, setDisplayedText] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [started, setStarted] = useState(false);
 
-    useFrame((state) => {
-        if (meshRef.current) {
-            targetRotation.current.x = mousePosition.y * 0.3;
-            targetRotation.current.y = mousePosition.x * 0.3;
+    useEffect(() => {
+        const startTimer = setTimeout(() => {
+            setStarted(true);
+        }, delay * 1000);
 
-            meshRef.current.rotation.x = THREE.MathUtils.lerp(
-                meshRef.current.rotation.x,
-                targetRotation.current.x,
-                0.05
-            );
-            meshRef.current.rotation.y = THREE.MathUtils.lerp(
-                meshRef.current.rotation.y,
-                targetRotation.current.y,
-                0.05
-            );
+        return () => clearTimeout(startTimer);
+    }, [delay]);
 
-            meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+    useEffect(() => {
+        if (!started) return;
+
+        if (currentIndex < text.length) {
+            const timer = setTimeout(() => {
+                setDisplayedText(prev => prev + text[currentIndex]);
+                setCurrentIndex(prev => prev + 1);
+            }, 100); // Speed of typing
+
+            return () => clearTimeout(timer);
         }
-    });
+    }, [currentIndex, text, started]);
 
     return (
-        <Sphere ref={meshRef} args={[1, 64, 64]} scale={2.5}>
-            <MeshDistortMaterial
-                color="#00f0ff"
-                attach="material"
-                distort={0.4}
-                speed={2}
-                roughness={0.2}
-                metalness={0.8}
-                emissive="#00f0ff"
-                emissiveIntensity={0.2}
-            />
-        </Sphere>
+        <span className="typewriter-text">
+            {displayedText}
+            <motion.span
+                className="typewriter-cursor"
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+            >
+                |
+            </motion.span>
+        </span>
     );
 };
 
-// Particle Field Background
-const ParticleField = () => {
-    const particlesRef = useRef();
-    const particleCount = 200;
-
-    const positions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-        positions[i * 3] = (Math.random() - 0.5) * 20;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-    }
-
-    useFrame((state) => {
-        if (particlesRef.current) {
-            particlesRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-            particlesRef.current.rotation.x = state.clock.elapsedTime * 0.01;
-        }
-    });
-
+// Animated Text Line
+const AnimatedLine = ({ children, delay = 0, className = '' }) => {
     return (
-        <points ref={particlesRef}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    count={particleCount}
-                    array={positions}
-                    itemSize={3}
-                />
-            </bufferGeometry>
-            <pointsMaterial
-                color="#00f0ff"
-                size={0.05}
-                transparent
-                opacity={0.6}
-                sizeAttenuation
-            />
-        </points>
+        <motion.div
+            className={`animated-line ${className}`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+                duration: 0.8,
+                delay: delay,
+                ease: [0.16, 1, 0.3, 1]
+            }}
+        >
+            {children}
+        </motion.div>
     );
 };
 
@@ -94,19 +68,29 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
 
     return (
         <section ref={heroRef} className="hero" id="hero">
-            {/* 3D Canvas Background */}
-            <div className="hero-canvas-container">
-                <Canvas
-                    camera={{ position: [0, 0, 6], fov: 50 }}
-                    gl={{ antialias: true, alpha: true }}
-                    dpr={[1, 2]}
-                >
-                    <ambientLight intensity={0.5} />
-                    <pointLight position={[10, 10, 10]} intensity={1} color="#00f0ff" />
-                    <pointLight position={[-10, -10, -10]} intensity={0.5} color="#a855f7" />
-                    <FloatingOrb mousePosition={mousePosition} />
-                    <ParticleField />
-                </Canvas>
+            {/* Particle Background - Subtle moving dots */}
+            <div className="hero-particles" aria-hidden="true">
+                {[...Array(50)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="particle"
+                        initial={{
+                            x: Math.random() * 100 + '%',
+                            y: Math.random() * 100 + '%',
+                            opacity: Math.random() * 0.5 + 0.2
+                        }}
+                        animate={{
+                            y: [null, '-100%'],
+                            opacity: [null, 0]
+                        }}
+                        transition={{
+                            duration: Math.random() * 20 + 10,
+                            repeat: Infinity,
+                            ease: 'linear',
+                            delay: Math.random() * 5
+                        }}
+                    />
+                ))}
             </div>
 
             {/* Gradient Overlay */}
@@ -114,107 +98,97 @@ const CinematicHero = ({ mousePosition = { x: 0, y: 0 } }) => {
 
             {/* Content */}
             <div className="hero-content">
-                <div className="hero-grid">
-                    <div className="hero-text-container">
-                        {/* Blur Reveal Intro */}
-                        <BlurText
-                            text="This is not a portfolio..."
-                            className="hero-intro"
-                            delay={0.3}
-                        />
+                <div className="hero-layout">
+                    {/* Left Side - Text Content */}
+                    <div className="hero-text-side">
+                        <AnimatedLine delay={0.2} className="hero-intro">
+                            THIS IS NOT A PORTFOLIO...
+                        </AnimatedLine>
 
-                        {/* Title with Blur Reveal */}
-                        <h1 className="hero-title">
-                            <BlurText
-                                text="It's an"
-                                className="hero-title-line"
-                                delay={0.5}
-                            />
-                            <BlurText
-                                text="Experience"
-                                className="hero-title-highlight"
-                                delay={0.8}
-                                colorPulse={true}
-                            />
-                        </h1>
+                        <div className="hero-title-block">
+                            <AnimatedLine delay={0.5}>
+                                <span className="hero-title-small">It's an</span>
+                            </AnimatedLine>
+
+                            <motion.h1
+                                className="hero-title-main"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            >
+                                <TypewriterText text="Experience" delay={1} />
+                            </motion.h1>
+                        </div>
 
                         <motion.div
                             className="hero-divider"
                             initial={{ scaleX: 0 }}
                             animate={{ scaleX: 1 }}
-                            transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 1, delay: 2.2, ease: [0.16, 1, 0.3, 1] }}
                         />
 
-                        {/* Subtitle with Blur Reveal */}
-                        <BlurText
-                            text="Crafted by Youngdev"
-                            className="hero-subtitle"
-                            delay={1.4}
-                        />
+                        <AnimatedLine delay={2.4} className="hero-subtitle">
+                            Crafted by <span className="hero-name">Youngdev</span>
+                        </AnimatedLine>
 
-                        <BlurText
-                            text="Frontend Developer & Creative Technologist"
-                            className="hero-role"
-                            delay={1.6}
-                        />
+                        <AnimatedLine delay={2.6} className="hero-role">
+                            Frontend Developer & Creative Technologist
+                        </AnimatedLine>
 
-                        <BlurText
-                            text="Crypto Developer & Trader"
-                            className="hero-role hero-role-crypto"
-                            delay={1.8}
-                        />
+                        <AnimatedLine delay={2.8} className="hero-role hero-role-crypto">
+                            Crypto Developer & Trader
+                        </AnimatedLine>
 
-                        {/* Interactive CTA Button */}
+                        {/* CTA Button */}
                         <motion.div
                             className="hero-cta"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 2, duration: 0.6 }}
+                            transition={{ delay: 3.2, duration: 0.6 }}
                         >
                             <a href="#projects" className="btn-play">
                                 <span className="btn-play-icon">▶</span>
-                                <span className="btn-play-text">Explore My Work</span>
+                                <span className="btn-play-text">EXPLORE MY WORK</span>
                                 <span className="btn-play-bg"></span>
                             </a>
                         </motion.div>
                     </div>
 
-                    {/* Magnetic Image Container */}
+                    {/* Right Side - Rectangle with Profile Image */}
                     <motion.div
-                        className="hero-image-container"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        className="hero-visual-side"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        {...magnetic}
                     >
-                        <div
-                            className="hero-image-wrapper"
-                            ref={magnetic.ref}
-                            {...magnetic.handlers}
-                            style={magnetic.style}
-                        >
-                            <div className="hero-image-glow" />
+                        <div className="hero-image-container">
+                            <div className="hero-image-border" />
                             <img
                                 src="/profile.jpg"
-                                alt="Abdi Kadir Abdullahi"
-                                className="hero-profile-img"
+                                alt="Youngdev - Crypto Developer"
+                                className="hero-profile-image"
                             />
-                            <div className="hero-image-border" />
-                            <div className="hero-image-shine" />
+                            <div className="hero-image-glow" />
                         </div>
                     </motion.div>
                 </div>
 
                 {/* Scroll Indicator */}
                 <motion.div
-                    className="hero-scroll-indicator"
+                    className="scroll-indicator"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2.5, duration: 0.6 }}
+                    transition={{ delay: 3.5 }}
                 >
-                    <span className="scroll-text">Scroll to explore</span>
-                    <div className="scroll-line">
-                        <div className="scroll-dot" />
-                    </div>
+                    <span>SCROLL TO EXPLORE</span>
+                    <motion.div
+                        className="scroll-arrow"
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                        ↓
+                    </motion.div>
                 </motion.div>
             </div>
         </section>
